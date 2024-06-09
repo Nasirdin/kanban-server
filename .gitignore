@@ -1,0 +1,28 @@
+# Папки
+node_modules/
+dist/
+coverage/
+
+# Локальные конфигурационные файлы
+.env
+
+# Логи и временные файлы
+*.log
+*.tmp
+
+# IDE/редакторы кода
+.vscode/
+.idea/
+
+# Кэш npm и yarn
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Файлы настроек
+package-lock.json
+yarn.lock
+
+# Файлы с рекурсивными ссылками
+*.swp
+.DS_Store
