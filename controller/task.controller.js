@@ -1,7 +1,5 @@
 const db = require("../db");
-// const { broadcastNewTask } = require("../);
-
-class UserController {
+class TaskController {
   async createTask(req, res) {
     const { title, content, authorId } = req.body;
     const newTask = await db.query(
@@ -14,6 +12,8 @@ class UserController {
   async getAllTasks(req, res) {
     const allTasks = await db.query(`SELECT * FROM newTask`);
 
+    const createdTask = newTask.rows[0];
+    req.io.emit("newTaskCreated", createdTask);
     res.json(allTasks.rows);
   }
   async updateTaskStatus(req, res) {
@@ -27,4 +27,4 @@ class UserController {
   }
 }
 
-module.exports = new UserController();
+module.exports = new TaskController();

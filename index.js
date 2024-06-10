@@ -12,9 +12,20 @@ const server = http.createServer(app);
 
 const corsOptions = {
   origin: "http://localhost:5173",
+  methods: ["GET", "POST"],
+  credentials: true,
 };
 
-const io = socketIo(server);
+app.use(cors(corsOptions));
+app.use(express.json());
+
+const io = socketIo(server, {
+  cors: {
+    origin: "http://localhost:5173",
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
 
 io.on("connection", (socket) => {
   console.log("Client connected");
@@ -24,9 +35,6 @@ io.on("connection", (socket) => {
   });
 });
 
-app.use(cors(corsOptions));
-app.use(express.json());
-
 app.use((req, res, next) => {
   req.io = io;
   next();
@@ -35,9 +43,6 @@ app.use((req, res, next) => {
 app.use("/api", userRouter);
 app.use("/api", taskRouter);
 
-server.listen(PORT, () =>
-  console.log(`Ура! сервер работает :) || PORT: ${PORT}`)
-);
+server.listen(PORT, () => console.log(`Ура! сервер работает :) || PORT: ${PORT}`));
 
 module.exports = { app, io };
-``
